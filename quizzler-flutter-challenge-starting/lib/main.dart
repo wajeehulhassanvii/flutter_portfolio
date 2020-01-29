@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'question.dart';
+//TODO: Step 2 - Import the rFlutter_Alert package here.
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'quiz_brain.dart';
 
 QuizBrain quizBrain = QuizBrain();
@@ -29,36 +30,36 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  List<Icon> scoreKeeper = [
-    Icon(
-      Icons.check,
-      color: Colors.green,
-    ),
-    Icon(
-      Icons.close,
-      color: Colors.red,
-    ),
-    Icon(
-      Icons.close,
-      color: Colors.red,
-    ),
-    Icon(
-      Icons.close,
-      color: Colors.red,
-    ),
-    Icon(
-      Icons.close,
-      color: Colors.red,
-    ),
-  ];
+  List<Icon> scoreKeeper = [];
 
-  List<Question> questionBank = [
-  Question('You can lead a cow down stairs but not up stairs.', false),
-  Question('Approximately one quarter of human bones are in the feet.', true),
-  Question('A slug\'s blood is green.', false),
-  ];
+  void checkAnswer(bool userPickedAnswer) {
+    bool correctAnswer = quizBrain.getCorrectAnswer();
 
-  int questionNumber = 0;
+    setState(() {
+      //TODO: Step 4 - Use IF/ELSE to check if we've reached the end of the quiz. If true, execute Part A, B, C, D.
+      if(quizBrain.isFinished()){
+        Alert(context: context, title: "QUIZZLER", desc: "Reached the end of the quiz").show();
+        print('true returned');
+        quizBrain.reset();
+        scoreKeeper=[];
+      } else {
+        if (userPickedAnswer == correctAnswer) {
+          scoreKeeper.add(Icon(
+            Icons.check,
+            color: Colors.green,
+          ));
+        } else {
+          scoreKeeper.add(Icon(
+            Icons.close,
+            color: Colors.red,
+          ));
+        }
+      }
+
+      quizBrain.nextQuestion();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -71,7 +72,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                quizBrain.getQuestionText(questionNumber),
+                quizBrain.getQuestionText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -95,23 +96,9 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctAnswer = quizBrain.getQuestionAnswer(questionNumber);
-                if (correctAnswer == true){
-                  print('user got it right');
-                } else {
-                  print('user got it wrong');
-                }
-                setState(() {
-                  questionNumber++;
-                  if (questionNumber>=quizBrain.getTotalQuestions()){
-                    questionNumber=0;
-                  }
-                  scoreKeeper.add(Icon(Icons.check,color: Colors.green));
-                  if (scoreKeeper.length==10){
-                    scoreKeeper=[];
-                  }
-                });
-                },
+                //The user picked true.
+                checkAnswer(true);
+              },
             ),
           ),
         ),
@@ -128,34 +115,14 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctAnswer = quizBrain.getQuestionAnswer(questionNumber);
-
-                if (correctAnswer == false){
-                  print('user got it right');
-                } else {
-                  print('user got it wrong');
-                }
-
-                setState(() {
-                  questionNumber++;
-                  if (questionNumber>=quizBrain.getTotalQuestions()){
-                    questionNumber=0;
-                  }
-                  scoreKeeper.add(Icon(Icons.close,color: Colors.red));
-                  if (scoreKeeper.length==10){
-                    scoreKeeper=[];
-                  }
-                });
                 //The user picked false.
+                checkAnswer(false);
               },
             ),
           ),
         ),
-        SizedBox(
-          height: 20.0,
-          child: Row(
-            children: scoreKeeper,
-          ),
+        Row(
+          children: scoreKeeper,
         )
       ],
     );
