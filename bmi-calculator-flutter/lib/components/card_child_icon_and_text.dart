@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'constants.dart';
+import '../constants.dart';
 
 class CardChildIconAndText extends StatelessWidget {
   final String cardTextString;
@@ -23,7 +23,7 @@ class CardChildIconAndText extends StatelessWidget {
         ),
         Text(
           cardTextString,
-          style: kIconStringTextStyle,
+          style: kLabelTextStyle,
         ),
       ],
     );
