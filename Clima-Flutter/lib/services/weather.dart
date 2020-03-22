@@ -14,6 +14,7 @@ class WeatherModel {
     NetworkHelper networkHelper = NetworkHelper('$owm_url?lat=${location.latitude}&lon=${location.longitude}&appid=$owm_api_key&units=metric');
 
     var weatherData = await networkHelper.getData();
+
   }
   String getWeatherIcon(int condition) {
     if (condition < 300) {
