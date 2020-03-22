@@ -60,8 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
             urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
             subdomains: ['a', 'b', 'c']),
         MarkerLayerOptions(
-          markers:
-          markerByLatLngList,
+          markers: markerByLatLngList,
         ),
       ],
     );
