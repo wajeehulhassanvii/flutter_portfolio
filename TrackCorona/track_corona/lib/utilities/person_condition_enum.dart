@@ -1,0 +1,1 @@
+enum PersonCondition {well,symptoms,infected}

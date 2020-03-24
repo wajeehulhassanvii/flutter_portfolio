@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong/latlong.dart';
-import 'package:trackcorona/utilities/person.dart';
-import 'package:trackcorona/utilities/person_condition_enum.dart';
-import 'package:trackcorona/utilities/shape_painter.dart';
+import 'package:trackcorona/presentation/models/person.dart';
+import 'package:trackcorona/map/core/shape_painter.dart';
 
 class MarkersByList{
 
@@ -31,12 +29,14 @@ class MarkersByList{
                 ),
               ],
             ),
-          )
+          ),
       );
     }
 
 
 
     return listOfMarker;
-  }
+  } // end of getMarkerListByLatLon
+
+
 }
